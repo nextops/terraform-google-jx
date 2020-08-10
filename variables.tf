@@ -182,3 +182,11 @@ variable "version_stream_ref" {
   type        = string
   default     = "master"
 }
+
+// ----------------------------------------------------------------------------
+// kubeconfig specific variables
+// ----------------------------------------------------------------------------
+variable "fetch_kubeconfig" {
+  description = "Set to true when using gcloud to fetch kubeconfig"
+  value = false
+}
