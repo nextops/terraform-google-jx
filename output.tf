@@ -42,3 +42,8 @@ output "jx_requirements" {
   description = "The jx-requirements rendered output"
   value       = local.content
 }
+
+output "gcloud_bin_dir" {
+  description = "The gcloud binary directory"
+  value       = module.gcloud.bin_dir
+}
