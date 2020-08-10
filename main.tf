@@ -245,10 +245,16 @@ locals {
 }
 
 // ----------------------------------------------------------------------------
-// Let's make sure `jx boot` can connect to the cluster for local booting 
+// Use Terraform to manage gcloud
 // ----------------------------------------------------------------------------
-resource "null_resource" "kubeconfig" {
-  provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials ${local.cluster_name} --zone=${module.cluster.cluster_location} --project=${var.gcp_project}"
-  }
+module "gcloud" {
+  source   = "terraform-google-modules/gcloud/google"
+  version  = "1.4.1"
+  platform = "linux"
+
+  skip_download                     = "false"
+  use_tf_google_credentials_env_var = "true"
+
+  create_cmd_entrypoint = "gcloud"
+  create_cmd_body       = "container clusters get-credentials ${local.cluster_name} --zone=${module.cluster.cluster_location} --project=${var.gcp_project}"
 }
